@@ -39,7 +39,7 @@ cat1.products.create!({
   name:  'Men\'s Classy shirt',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel1.jpg'),
-  quantity: 10,
+  quantity: 0,
   price: 64.99
 })
 
@@ -71,7 +71,7 @@ cat1.products.create!({
   name:  'Russian Spy Shoes',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel5.jpg'),
-  quantity: 8,
+  quantity: 0,
   price: 1_225.00
 })
 
