@@ -1,0 +1,17 @@
+<%product = line_item.product%>
+<%email = line_item.order.email%>
+
+<article class="product">
+  <header>
+    <%= link_to product do %>
+      <%= image_tag product.image.thumb, alt: product.name %>
+    <% end %>
+    <h4><%= product.name %></h4><small>Quantity:<%= line_item.quantity%></small>
+  </header>
+  <p class="description">
+    <%= product.description %>
+  </p>
+   <aside class="price">
+    Total:<%= humanized_money_with_symbol line_item.total_price_cents %>
+   </aside>
+</article>
