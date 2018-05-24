@@ -10,15 +10,20 @@ Rails.application.routes.draw do
     delete :remove_item
   end
 
-  resources :sessions, only:[:new,:create,:destroy]
   resources :orders, only: [:create,:show]
   resources :users, only: [:new,:create]
+  get '/users/new' => "users#new"
+  post '/users' => "users#create"
 
   namespace :admin do
     root to: 'dashboard#show'
     resources :products, except: [:edit, :update, :show]
     resources :categories
   end
+
+  get '/login' => "sessions#new"
+  post '/login' =>"sessions#create"
+  get '/logout' => "sessions#destroy"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
