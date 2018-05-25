@@ -6,9 +6,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.find(params[:id])
+
     charge = perform_stripe_charge
     order  = create_order(charge)
+    @order = Order.find(params[:id])
     @line_items = order.line_items
 
     if order.valid?
@@ -33,6 +34,7 @@ class OrdersController < ApplicationController
   end
 
   def perform_stripe_charge
+
     Stripe::Charge.create(
       source:      params[:stripeToken],
       amount:      cart_total, # in cents

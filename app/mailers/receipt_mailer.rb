@@ -9,6 +9,6 @@ class ReceiptMailer < ApplicationMailer
 
     @line_items = line_items
 
-    mail(to: order_email, subject: 'Order Receipt')
+    mail(to: order_email, subject:"Jungle Receipt Order # #{@line_items[0].order.id}")
   end
 end

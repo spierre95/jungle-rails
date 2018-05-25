@@ -1,4 +1,7 @@
-<h1>ReceiptMailer#order_receipt</h1>
+
+<h1>Thank you for shoppoing with Jungle</h1>
+
+<h2>Receipt:</h2>
 
 <% @line_items.each do |items| %>
   <p><%=items.quantity%> x <%=items.product.name%> price: <%= humanized_money_with_symbol items.total_price_cents%></p>
