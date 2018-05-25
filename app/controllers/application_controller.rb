@@ -8,8 +8,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def admin
+    @admin ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
   def authorize
-    redirect_to '/sessions/new' unless current_user
+    redirect_to '/login' unless current_user
   end
 
   private
