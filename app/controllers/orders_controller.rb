@@ -6,12 +6,17 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @order = Order.find(params[:id])
     charge = perform_stripe_charge
     order  = create_order(charge)
+    @line_items = order.line_items
 
     if order.valid?
       empty_cart!
-      redirect_to order, notice: 'Your Order has been placed.'
+
+      ReceiptMailer.email_receipt(@order.email,@line_items).deliver
+      format.html { redirect_to @order, notice: 'Your Order has been placed.' }
+      format.json { render :show, status: :created, location: @order }
     else
       redirect_to cart_path, flash: { error: order.errors.full_messages.first }
     end
@@ -69,3 +74,4 @@ class OrdersController < ApplicationController
   end
 
 end
+

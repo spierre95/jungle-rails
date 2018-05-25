@@ -1,0 +1,9 @@
+<h1>ReceiptMailer#order_receipt</h1>
+
+<% @line_items.each do |items| %>
+  <p><%=items.quantity%> x <%=items.product.name%> price: <%= humanized_money_with_symbol items.total_price_cents%></p>
+<%end%>
+
+<p>Total:<%= humanized_money_with_symbol @line_items[0].order.total_cents %></p>
+
+
