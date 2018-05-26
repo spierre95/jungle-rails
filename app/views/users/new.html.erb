@@ -2,15 +2,20 @@
 
 <table class="table table-bordered">
       <thead>
-        <tr>
+        <dl>
           <%= form_for :user, url: '/users' do |f| %>
-          <th colspan="2">First Name: <%= f.text_field :first_name %></th>
-          <th colspan="2">Last Name: <%= f.text_field :last_name %></th>
-          <th colspan="2">Email:<%= f.text_field :email %></th>
-          <th colspan="2">Password: <%= f.password_field :password %></th>
-          <th colspan="2">Password Confirmation: <%= f.password_field :password_confirmation %></th>
-        </tr>
-         <%= f.submit "Submit" %>
+          <dt colspan="2">First Name:</dt>
+          <dd><%= f.text_field :first_name %></dd>
+          <dt colspan="2">Last Name:</dt>
+          <dd><%= f.text_field :last_name %></dd>
+          <dt colspan="2">Email:</dt>
+          <dd><%= f.text_field :email %></dd>
+          <dt colspan="2">Password:</dt>
+          <dd><%= f.password_field :password %></dd>
+          <dt colspan="2">Password Confirmation:
+          <dd> <%= f.password_field :password_confirmation %></dd>
+          <dt><%= f.submit "Submit" %></dt>
+        </dl>
           <% end %>
       </thead>
 </table>
