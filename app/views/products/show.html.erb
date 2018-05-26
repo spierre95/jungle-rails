@@ -23,23 +23,43 @@
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
         </dl>
-
       </div>
     </div>
 <h2>Reviews:</h2>
-     <%@product.reviews.each do |product|%>
-     <div class="col-sm-8">
-        <dl class="dl-horizontal">
-          <dt><%=product.user.first_name%> says:</dt>
-          <dd><%= product.description %></dd>
-          <dt>Rating</dt>
-          <dd><%=product.rating%></dd>
-        </dl>
+       <%@product.reviews.reverse.each do |review|%>
+       <div class="col-sm-8">
+          <dl class="dl-horizontal">
+            <dt><%=review.user.first_name%> says:</dt>
+            <dd><%= review.description %></dd>
+            <dt>Rating</dt>
+            <dd><%=review.rating%></dd>
+          <%if current_user == review.user %>
+            <dt>Delete</dt>
+            <dd><%= link_to fa_icon('trash'), product_review_path(@product.id, review.id),
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %></dd>
+            <%end%>
+          </dl>
+        </div>
       </div>
-    </div>
+  <%end%>
+
+<%if current_user %>
+<%= form_for [@product, Review.new] do |f| %>
+ <div class="col-sm-8">
+ <div class="form-group">
+          <%= f.label :rating %>
+          <%= f.select :rating, options_for_select(0..5), { prompt: "Select Rating" } %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: 'form-control' %>
+      </div>
+
+      <%= f.submit 'Submit Review', class: 'btn btn-primary' %>
+</div>
 <%end%>
-
-
+<%end%>
   </article>
-
 </section>
