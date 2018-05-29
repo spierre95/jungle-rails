@@ -4,9 +4,9 @@ require_relative '../../app/models/user.rb'
 
 RSpec.describe User, type: :model do
   generate_password = Faker::Internet.password
-  let (:first_name){Faker::Name.first_name}
-  let (:last_name) {Faker::Name.last_name}
-  let (:email) {Faker::Internet.email}
+  let (:first_name){'Bob'}
+  let (:last_name) {'Smith'}
+  let (:email) {'example@email.com'}
   let (:password) {generate_password}
   let (:password_confirmation) {generate_password}
 
@@ -70,9 +70,11 @@ context 'password too short' do
 end
 
 context 'email is unique' do
-  User.all.include?(:email)
   it 'is valid' do
-    expect(subject).to be_valid
+    subject.save
+    newUser = User.new(email: 'example@email.com')
+    expect(newUser).to_not be_valid
+    expect(newUser.errors.full_messages).to include("Email has already been taken")
   end
 end
 end
@@ -91,6 +93,21 @@ describe '.authenticate_with_credentials' do
       let (:password){Faker::Internet.password}
       it 'is valid'do
       expect( User.authenticate_with_credentials(subject.email,subject.password)).to be nil
+    end
+  end
+
+  context 'spaces in email' do
+      let (:email){'example@em.com'}
+      before {subject.save}
+      it 'is valid'do
+      expect( User.authenticate_with_credentials('  example@em.com',subject.password)).to be eq(subject)
+    end
+  end
+
+  context 'not case sensitive' do
+      it 'is valid' do
+      subject.save
+      expect( User.authenticate_with_credentials('Example@Email.com',subject.password)).to eq(subject)
     end
   end
 end
