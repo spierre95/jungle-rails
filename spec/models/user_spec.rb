@@ -17,6 +17,8 @@ RSpec.describe User, type: :model do
     password_confirmation:password_confirmation
   }
 
+describe 'Validations' do
+
  context 'first_name is blank' do
     let(:first_name) { nil }
     it 'is not valid' do
@@ -73,34 +75,33 @@ context 'email is unique' do
     expect(subject).to be_valid
   end
 end
+end
 
+describe '.authenticate_with_credentials' do
+
+  context 'password & email is valid' do
+      before {subject.save}
+      it 'is valid'do
+      expect( User.authenticate_with_credentials(subject.email,subject.password)).to eq(subject)
+    end
+  end
+
+  context 'password & email is valid' do
+      before {subject.save}
+      let (:password){Faker::Internet.password}
+      it 'is valid'do
+      expect( User.authenticate_with_credentials(subject.email,subject.password)).to be nil
+    end
+  end
+end
 end
 
 
-# context 'name is blank' do
-#     let(:name) { nil }
-#     it 'is not valid' do
-#       expect(subject).not_to be_valid
-#     end
-#   end
 
-# context 'price is blank' do
-#     let(:price) { nil }
-#     it 'is not valid' do
-#       expect(subject).not_to be_valid
-#     end
-#   end
 
-# context 'quantity is blank' do
-#     let(:quantity) { nil }
-#     it 'is not valid' do
-#       expect(subject).not_to be_valid
-#     end
-#   end
 
-# context 'category is blank' do
-#     let(:category) { nil }
-#     it 'is not valid' do
-#       expect(subject).not_to be_valid
-#     end
-#   end
+
+
+
+
+
